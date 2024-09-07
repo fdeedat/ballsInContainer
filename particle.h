@@ -4,19 +4,19 @@
 class particle{
     sf::Vector2f pos;
     sf::Vector2f vel;
-    float radius;
     sf::CircleShape particleShape;
 
     public:
-    particle(float posX, float posY, float velX, float velY, float radius);
+    float radius;
+    float mass;
+    
+    particle(float posX, float posY, float velX, float velY, float radius, float mass);
     sf::Vector2f getPos();
     sf::Vector2f getVel();
+    float getRadius();
+    void updateVel(float vx, float vy);
     void render(sf::RenderWindow &window);
-    
-    void update(float dt);
+
+    void updatePos(float dt);
 };
 #include "particle.cpp"
-
-// class tank{
-//     sf::
-// }

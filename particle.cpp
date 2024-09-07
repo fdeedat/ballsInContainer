@@ -1,6 +1,10 @@
 #include "particle.h"
 
-particle::particle(float posX, float posY, float velX, float velY,float radius){
+particle::particle(float posX, float posY, float velX, float velY,float radius,float mass){
+    /*
+    * constructor: pos, vel, radius, mass
+    */
+    
     pos.x = posX;
     pos.y = posY;
     
@@ -8,6 +12,7 @@ particle::particle(float posX, float posY, float velX, float velY,float radius){
     vel.y = velY;
 
     this->radius = radius;
+    this->mass = mass;
 
     particleShape.setRadius(radius);
     particleShape.setPosition(pos);
@@ -23,24 +28,20 @@ sf::Vector2f particle::getVel(){
     return vel;
 }
 
+float particle::getRadius(){
+    return radius;
+}
+
+void particle::updateVel(float vx, float vy){
+    vel.x = vx;
+    vel.y = vy;
+}
+
 void particle::render(sf::RenderWindow &window){
     particleShape.setPosition(pos);
     window.draw(particleShape);
 }
 
-void particle::update(float dt){
-    
-    /* F = m a
-    *  m g = m a
-    *  a = -g
-    */
-   float ax, ay;
-   if(pos.y+this->radius>750.0f) vel.y = -std::abs(vel.y);
-
-   ay = 9.81f*20; // 1 pixel = 20 m
-   vel.y += ay*dt;
-   pos.y += vel.y*dt;
-
-   vel.x += ax*dt*20;
-   pos.x += vel.x*dt;
+void particle::updatePos(float dt){
+    pos += vel*dt;
 }

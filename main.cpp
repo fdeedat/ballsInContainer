@@ -1,11 +1,15 @@
 #include <iostream>
 #include <particle.h>
+#include <engine.h>
 
 sf::RenderWindow window(sf::VideoMode(800, 800), "Particle Physics",sf::Style::Titlebar | sf::Style::Close);
 
 int main()
 {
-    particle p1(200.0f,200.0f,50.0f,0.0f,3.0f);
+    engine e;
+    particle p1(350.0f,200.0f,50.0f,0.0f,3.0f,3.0f); e.addParticle(p1);
+    particle p2(450.0f,200.0f,-50.0f,0.0f,3.0f,3.0f); e.addParticle(p2);
+
     sf::Clock clock;
     window.setFramerateLimit(120);
     sf::Time deltaTime;
@@ -18,11 +22,10 @@ int main()
         
         deltaTime = clock.restart();
         float dt = deltaTime.asSeconds(); // This makes the simulation more accurate
-        p1.update(dt);
-        p1.render(window);
+        e.updateDynamics(p1,dt,window);
+        // p1.updatePos(dt);
+        // p1.render(window);
         window.display();
-
-        std::cout<<dt<<std::endl;
 
         while (window.pollEvent(event))
         {
