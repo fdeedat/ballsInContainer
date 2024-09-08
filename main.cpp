@@ -1,6 +1,7 @@
 #include <iostream>
 #include <particle.h>
 #include <engine.h>
+#include <container.h>
 
 sf::RenderWindow window(sf::VideoMode(800, 800), "Particle Physics",sf::Style::Titlebar | sf::Style::Close);
 
@@ -28,6 +29,7 @@ int main()
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
             c.setPosition(mousePos.x,mousePos.y);
         }
+
         c.draw(window);
         window.display();
 
