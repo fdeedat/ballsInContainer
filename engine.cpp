@@ -6,6 +6,8 @@ float engine::dotProduct(sf::Vector2f v1, sf::Vector2f v2) {
 }
 
 void engine:: resolveCollision(particle& p1, particle& p2) {
+
+    // collision to another particle
     sf::Vector2f delta = p1.getPos() - p2.getPos();
     float dist = sqrt(delta.x * delta.x + delta.y * delta.y);
     float combinedRadius = p1.getRadius() + p2.getRadius();
