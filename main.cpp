@@ -7,8 +7,9 @@ sf::RenderWindow window(sf::VideoMode(800, 800), "Particle Physics",sf::Style::T
 int main()
 {
     engine e;
-    particle p1(350.0f,200.0f,50.0f,0.0f,3.0f,3.0f); e.addParticle(p1);
-    particle p2(450.0f,200.0f,-50.0f,0.0f,3.0f,3.0f); e.addParticle(p2);
+    // U-shape boundaries (3 rectangles)
+
+    container c(400.0f,400.0f,5.0f,100.0f,100.0f);
 
     sf::Clock clock;
     window.setFramerateLimit(120);
@@ -21,10 +22,13 @@ int main()
         window.clear();
         
         deltaTime = clock.restart();
-        float dt = deltaTime.asSeconds(); // This makes the simulation more accurate
-        e.updateDynamics(p1,dt,window);
-        // p1.updatePos(dt);
-        // p1.render(window);
+        float dt = deltaTime.asSeconds(); 
+
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            c.setPosition(mousePos.x,mousePos.y);
+        }
+        c.draw(window);
         window.display();
 
         while (window.pollEvent(event))
