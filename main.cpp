@@ -9,6 +9,8 @@ int main()
     engine e;
     particle p1(350.0f,200.0f,50.0f,0.0f,3.0f,3.0f); e.addParticle(p1);
     particle p2(450.0f,200.0f,-50.0f,0.0f,3.0f,3.0f); e.addParticle(p2);
+    particle p3(300.0f,200.0f,50.0f,0.0f,5.0f,5.0f); e.addParticle(p3);
+    particle p4(500.0f,200.0f,-50.0f,0.0f,5.0f,5.0f); e.addParticle(p4);
 
     sf::Clock clock;
     window.setFramerateLimit(120);

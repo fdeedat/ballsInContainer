@@ -1,10 +1,6 @@
 #include "particle.h"
 
 particle::particle(float posX, float posY, float velX, float velY,float radius,float mass){
-    /*
-    * constructor: pos, vel, radius, mass
-    */
-    
     pos.x = posX;
     pos.y = posY;
     
