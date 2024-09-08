@@ -19,7 +19,9 @@ void engine:: resolveCollision(particle& p1, particle& p2) {
         float speed1 = dotProduct(relativeVelocity1, normal);
         float speed2 = dotProduct(relativeVelocity2, normal);
         
-        if (speed1 > 0) return; // not 
+        if (speed1 > 0) return; // not colliding
+
+        // tumbukan diasumsikan lenting sempurna or someshit
 
         float impulse1 = (2.0f * speed1) / (p1.mass + p2.mass);
         float impulse2 = (2.0f * speed2) / (p1.mass + p2.mass);
@@ -47,10 +49,31 @@ void engine::addParticle(particle &p){
     particles.push_back(p);
 }
 
-void engine::updateDynamics(particle &p, float dt, sf::RenderWindow &w){
+void engine::handleWallCollisions(particle &p, container &c){
+    /*
+    * - detects if particle collides with wall
+    *   - select 
+    * - p.vel = -curr p.vel
+    */
+   float bottomWall = c.getBottomWallPos().y;
+   float leftWall = c.getLeftWallPos().x;
+   float rightWall = c.getRightWallPos().x;
+
+   float particlePosX = p.getPos().x;
+   float particlePosY = p.getPos().y;
+
+   if(particlePosX + p.getRadius() <= leftWall || particlePosX + p.getRadius() > rightWall){
+    p.updateVel(-p.getVel().x,p.getVel().y);
+   }else if(particlePosY + p.getRadius() > bottomWall) {
+    p.updateVel(p.getVel().x,-p.getVel().y);
+   };
+}
+
+void engine::updateDynamics(particle &p, float dt, sf::RenderWindow &w, container &c){
     for (auto& particle : particles) {
         particle.updatePos(dt);
         particle.render(w);
+        handleWallCollisions(particle,c);
     }
     handleCollisions();
 }

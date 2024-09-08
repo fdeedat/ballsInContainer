@@ -11,9 +11,12 @@ class container {
     float boxWidth;
     float boxHeight;
 
-    public:
+    public:    
         container(float x, float y, float wallThickness, float width, float height);
-        void setPosition(float x, float y); // Manipulate the position of the U-shaped box
-        void draw(sf::RenderWindow &window); // Draw the U-shaped box onto the given render window
+        void setPosition(float x, float y); 
+        void draw(sf::RenderWindow &window);
+        sf::Vector2f getLeftWallPos();
+        sf::Vector2f getRightWallPos();
+        sf::Vector2f getBottomWallPos();
 };
 #include "container.cpp"

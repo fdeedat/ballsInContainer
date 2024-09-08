@@ -33,6 +33,7 @@ float particle::getRadius(){
 }
 
 void particle::updateVel(float vx, float vy){
+    const float g = 1;
     vel.x = vx;
     vel.y = vy;
 }

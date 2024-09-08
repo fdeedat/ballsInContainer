@@ -37,3 +37,18 @@ void container::draw(sf::RenderWindow &window) {
     window.draw(rightWall);
     window.draw(bottomWall);
 }
+
+sf::Vector2f container::getLeftWallPos(){
+    float innerLeftWallx = leftWall.getPosition().x + wallThickness;
+    return sf::Vector2f(innerLeftWallx,leftWall.getPosition().y);
+}
+
+sf::Vector2f container::getBottomWallPos(){
+    float innerBottomWally = bottomWall.getPosition().y + boxHeight - wallThickness;
+    return sf::Vector2f(bottomWall.getPosition().x,innerBottomWally);
+}
+
+sf::Vector2f container::getRightWallPos(){
+    float innerRightWallx = rightWall.getPosition().x - wallThickness;
+    return sf::Vector2f(innerRightWallx,rightWall.getPosition().y);
+}
