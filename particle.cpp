@@ -28,7 +28,8 @@ float particle::getRadius(){
     return radius;
 }
 
-void particle::updateVel(float vx, float vy){
+void particle::updateVel(float vx, float vy, float dt){
+    // const float g = 100;
     vel.x = vx;
     vel.y = vy;
 }
@@ -39,5 +40,8 @@ void particle::render(sf::RenderWindow &window){
 }
 
 void particle::updatePos(float dt){
-    pos += vel*dt;
+    float g = 1.0f;
+    vel.y += g;
+
+    pos += sf::Vector2f(vel.x, vel.y)*dt;
 }

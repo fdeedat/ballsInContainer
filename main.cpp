@@ -1,16 +1,18 @@
 #include <iostream>
 #include <particle.h>
 #include <engine.h>
+#include <container.h>
 
 sf::RenderWindow window(sf::VideoMode(800, 800), "Particle Physics",sf::Style::Titlebar | sf::Style::Close);
 
 int main()
 {
+    bool isPaused = 0;
     engine e;
-    particle p1(350.0f,200.0f,50.0f,0.0f,3.0f,3.0f); e.addParticle(p1);
-    particle p2(450.0f,200.0f,-50.0f,0.0f,3.0f,3.0f); e.addParticle(p2);
-    particle p3(300.0f,200.0f,50.0f,0.0f,5.0f,5.0f); e.addParticle(p3);
-    particle p4(500.0f,200.0f,-50.0f,0.0f,5.0f,5.0f); e.addParticle(p4);
+    e.createParticles(1000, sf::Vector2f(10, 700), sf::Vector2f(50, 300),3);
+
+    // container c(400.0f,400.0f,5.0f,500.0f,100.0f);
+    container c(1,700,5,800,100);
 
     sf::Clock clock;
     window.setFramerateLimit(120);
@@ -23,11 +25,22 @@ int main()
         window.clear();
         
         deltaTime = clock.restart();
-        float dt = deltaTime.asSeconds(); // This makes the simulation more accurate
-        e.updateDynamics(p1,dt,window);
-        // p1.updatePos(dt);
-        // p1.render(window);
-        window.display();
+        float dt = deltaTime.asSeconds(); 
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+            isPaused = !isPaused;
+        }
+        
+        if(isPaused == false) {
+            e.updateDynamics(dt,window,c);
+            c.draw(window);
+            window.display();
+        }
+        
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            // c.setPosition(mousePos.x,mousePos.y);
+        }
 
         while (window.pollEvent(event))
         {

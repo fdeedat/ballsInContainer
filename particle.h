@@ -7,16 +7,16 @@ class particle{
     sf::CircleShape particleShape;
 
     public:
-    float radius;
-    float mass;
-    
-    particle(float posX, float posY, float velX, float velY, float radius, float mass);
-    sf::Vector2f getPos();
-    sf::Vector2f getVel();
-    float getRadius();
-    void updateVel(float vx, float vy);
-    void render(sf::RenderWindow &window);
+        float radius;
+        float mass;
 
-    void updatePos(float dt);
+        particle(float posX, float posY, float velX, float velY, float radius, float mass);
+        sf::Vector2f getPos();
+        sf::Vector2f getVel();
+        float getRadius();
+        void updateVel(float vx, float vy, float dt);
+        void render(sf::RenderWindow &window);
+        void updatePos(float dt);
 };
+
 #include "particle.cpp"
