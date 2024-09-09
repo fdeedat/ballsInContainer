@@ -44,7 +44,7 @@ sf::Vector2f container::getLeftWallPos(){
 }
 
 sf::Vector2f container::getBottomWallPos(){
-    float innerBottomWally = bottomWall.getPosition().y + boxHeight - wallThickness;
+    float innerBottomWally = bottomWall.getPosition().y;
     return sf::Vector2f(bottomWall.getPosition().x,innerBottomWally);
 }
 

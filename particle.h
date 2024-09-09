@@ -14,7 +14,7 @@ class particle{
         sf::Vector2f getPos();
         sf::Vector2f getVel();
         float getRadius();
-        void updateVel(float vx, float vy);
+        void updateVel(float vx, float vy, float dt);
         void render(sf::RenderWindow &window);
         void updatePos(float dt);
 };

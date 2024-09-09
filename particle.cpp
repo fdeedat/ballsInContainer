@@ -1,10 +1,7 @@
 #include "particle.h"
 
 particle::particle(float posX, float posY, float velX, float velY,float radius,float mass){
-    /*
-    * constructor: pos, vel, radius, mass
-    */
-    
+
     pos.x = posX;
     pos.y = posY;
     
@@ -32,8 +29,8 @@ float particle::getRadius(){
     return radius;
 }
 
-void particle::updateVel(float vx, float vy){
-    const float g = 1;
+void particle::updateVel(float vx, float vy, float dt){
+    // const float g = 100;
     vel.x = vx;
     vel.y = vy;
 }
@@ -44,5 +41,8 @@ void particle::render(sf::RenderWindow &window){
 }
 
 void particle::updatePos(float dt){
-    pos += vel*dt;
+    float g = 1.0f;
+    vel.y += g;
+
+    pos += sf::Vector2f(vel.x, vel.y)*dt;
 }

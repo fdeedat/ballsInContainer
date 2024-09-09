@@ -5,8 +5,7 @@ float engine::dotProduct(sf::Vector2f v1, sf::Vector2f v2) {
     return v1.x * v2.x + v1.y * v2.y;
 }
 
-void engine:: resolveCollision(particle& p1, particle& p2) {
-
+void engine:: resolveCollision(particle& p1, particle& p2, float dt) {
     // collision to another particle
     sf::Vector2f delta = p1.getPos() - p2.getPos();
     float dist = sqrt(delta.x * delta.x + delta.y * delta.y);
@@ -32,15 +31,15 @@ void engine:: resolveCollision(particle& p1, particle& p2) {
         sf::Vector2f newVel1 = p1.getVel() - impulseP1; 
         sf::Vector2f newVel2 = p2.getVel() - impulseP2; 
         
-        p1.updateVel(newVel1.x,newVel1.y);
-        p2.updateVel(newVel2.x,newVel2.y);
+        p1.updateVel(newVel1.x,newVel1.y, dt);
+        p2.updateVel(newVel2.x,newVel2.y, dt);
     }
 }
 
-void engine:: handleCollisions() {
+void engine:: handleCollisions(float dt) {
     for (size_t i = 0; i < particles.size(); ++i) {
         for (size_t j = i + 1; j < particles.size(); ++j) {
-            resolveCollision(particles[i], particles[j]);
+            resolveCollision(particles[i], particles[j],dt);
         }
     }
 }
@@ -49,7 +48,7 @@ void engine::addParticle(particle &p){
     particles.push_back(p);
 }
 
-void engine::handleWallCollisions(particle &p, container &c){
+void engine::handleWallCollisions(particle &p, container &c, float dt){
     /*
     * - detects if particle collides with wall
     *   - select 
@@ -63,19 +62,37 @@ void engine::handleWallCollisions(particle &p, container &c){
    float particlePosY = p.getPos().y;
 
     if(particlePosY + p.getRadius() > leftWall.y && particlePosX + p.getRadius() <= leftWall.x){
-        p.updateVel(-p.getVel().x,p.getVel().y);
+        p.updateVel(-p.getVel().x,p.getVel().y, dt);
     } else if(particlePosY + p.getRadius() > bottomWall.y) {
-        p.updateVel(p.getVel().x,-p.getVel().y);
+        p.updateVel(p.getVel().x,-p.getVel().y, dt);
     } else if(particlePosY + p.getRadius() > rightWall.y && particlePosX + p.getRadius() > rightWall.x){
-        p.updateVel(-p.getVel().x,p.getVel().y);
+        p.updateVel(-p.getVel().x,p.getVel().y, dt);
     };
 }
 
-void engine::updateDynamics(particle &p, float dt, sf::RenderWindow &w, container &c){
+void engine::updateDynamics(float dt, sf::RenderWindow &w, container &c){
     for (auto& particle : particles) {
         particle.updatePos(dt);
         particle.render(w);
-        handleWallCollisions(particle,c);
+        handleWallCollisions(particle,c,dt);
     }
-    handleCollisions();
+    handleCollisions(dt);
+}
+
+float engine::getRandomFloat(float min, float max) {
+    return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
+}
+
+void engine::createParticles(int numParticles, sf::Vector2f positionRange, sf::Vector2f velocityRange, float radius) {
+    for (int i = 0; i < numParticles; ++i) {
+        // Randomize position and velocity within the given range
+        float x = getRandomFloat(positionRange.x, positionRange.y);
+        float y = getRandomFloat(positionRange.x, positionRange.y);
+        float vx = getRandomFloat(velocityRange.x, velocityRange.y);
+        float vy = getRandomFloat(velocityRange.x, velocityRange.y);
+
+        sf::Vector2f velocity(vx, vy);
+        particles.emplace_back(x,y,vx,vy,radius,1);
+        // float posX, float posY, float velX, float velY,float radius,float mass
+    }
 }
