@@ -55,18 +55,20 @@ void engine::handleWallCollisions(particle &p, container &c){
     *   - select 
     * - p.vel = -curr p.vel
     */
-   float bottomWall = c.getBottomWallPos().y;
-   float leftWall = c.getLeftWallPos().x;
-   float rightWall = c.getRightWallPos().x;
+   sf::Vector2f bottomWall = c.getBottomWallPos();
+   sf::Vector2f leftWall = c.getLeftWallPos();
+   sf::Vector2f rightWall = c.getRightWallPos();
 
    float particlePosX = p.getPos().x;
    float particlePosY = p.getPos().y;
 
-   if(particlePosX + p.getRadius() <= leftWall || particlePosX + p.getRadius() > rightWall){
-    p.updateVel(-p.getVel().x,p.getVel().y);
-   }else if(particlePosY + p.getRadius() > bottomWall) {
-    p.updateVel(p.getVel().x,-p.getVel().y);
-   };
+    if(particlePosY + p.getRadius() > leftWall.y && particlePosX + p.getRadius() <= leftWall.x){
+        p.updateVel(-p.getVel().x,p.getVel().y);
+    } else if(particlePosY + p.getRadius() > bottomWall.y) {
+        p.updateVel(p.getVel().x,-p.getVel().y);
+    } else if(particlePosY + p.getRadius() > rightWall.y && particlePosX + p.getRadius() > rightWall.x){
+        p.updateVel(-p.getVel().x,p.getVel().y);
+    };
 }
 
 void engine::updateDynamics(particle &p, float dt, sf::RenderWindow &w, container &c){
