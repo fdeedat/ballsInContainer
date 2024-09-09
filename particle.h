@@ -6,6 +6,8 @@ class particle{
     sf::Vector2f vel;
     sf::CircleShape particleShape;
 
+    float velocity,tempPos;
+
     public:
         float radius;
         float mass;

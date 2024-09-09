@@ -28,8 +28,8 @@ void engine:: resolveCollision(particle& p1, particle& p2, float dt) {
         sf::Vector2f impulseP1 = impulse1 * p2.mass * normal;
         sf::Vector2f impulseP2 = impulse2 * p1.mass * normal;
 
-        sf::Vector2f newVel1 = p1.getVel() - impulseP1; 
-        sf::Vector2f newVel2 = p2.getVel() - impulseP2; 
+        sf::Vector2f newVel1 = (p1.getVel() - impulseP1)*0.9f; 
+        sf::Vector2f newVel2 = (p2.getVel() - impulseP2)*0.9f; 
         
         p1.updateVel(newVel1.x,newVel1.y, dt);
         p2.updateVel(newVel2.x,newVel2.y, dt);
@@ -54,20 +54,24 @@ void engine::handleWallCollisions(particle &p, container &c, float dt){
     *   - select 
     * - p.vel = -curr p.vel
     */
-   sf::Vector2f bottomWall = c.getBottomWallPos();
+   sf::Vector2f bottomWall = c.getBottomWallPos();                  
    sf::Vector2f leftWall = c.getLeftWallPos();
    sf::Vector2f rightWall = c.getRightWallPos();
+
+   float friction = 1000;
 
    float particlePosX = p.getPos().x;
    float particlePosY = p.getPos().y;
 
+    float vx,vy;
     if(particlePosY + p.getRadius() > leftWall.y && particlePosX + p.getRadius() <= leftWall.x){
-        p.updateVel(-p.getVel().x,p.getVel().y, dt);
+        p.updateVel(-p.getVel().x*0.8,p.getVel().y, dt);
     } else if(particlePosY + p.getRadius() > bottomWall.y) {
-        p.updateVel(p.getVel().x,-p.getVel().y, dt);
+        p.updateVel(p.getVel().x,-p.getVel().y*0.8, dt);
     } else if(particlePosY + p.getRadius() > rightWall.y && particlePosX + p.getRadius() > rightWall.x){
-        p.updateVel(-p.getVel().x,p.getVel().y, dt);
+        p.updateVel(-p.getVel().x*0.8,p.getVel().y, dt);
     };
+    
 }
 
 void engine::updateDynamics(float dt, sf::RenderWindow &w, container &c){

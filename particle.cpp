@@ -40,8 +40,8 @@ void particle::render(sf::RenderWindow &window){
 }
 
 void particle::updatePos(float dt){
-    float g = 1.0f;
-    vel.y += g;
+    float g = 3.0f;
+    vel.y += g*dt;
 
-    pos += sf::Vector2f(vel.x, vel.y)*dt;
+    pos += sf::Vector2f(vel.x*dt, vel.y);
 }
