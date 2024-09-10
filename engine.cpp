@@ -58,27 +58,27 @@ void engine::handleWallCollisions(particle &p, container &c, float dt){
    sf::Vector2f leftWall = c.getLeftWallPos();
    sf::Vector2f rightWall = c.getRightWallPos();
 
-   float friction = 1000;
-
    float particlePosX = p.getPos().x;
    float particlePosY = p.getPos().y;
 
     float vx,vy;
     if(particlePosY + p.getRadius() > leftWall.y && particlePosX + p.getRadius() <= leftWall.x){
-        p.updateVel(-p.getVel().x*0.8,p.getVel().y, dt);
+        p.updateVel(-p.getVel().x*0.7,p.getVel().y, dt);
     } else if(particlePosY + p.getRadius() > bottomWall.y) {
-        p.updateVel(p.getVel().x,-p.getVel().y*0.8, dt);
+        p.updateVel(p.getVel().x,-p.getVel().y*0.7, dt);
+        // p.updatePos(dt,sf::Vector2f(p.getPos().x,bottomWall.y - p.getRadius()));
     } else if(particlePosY + p.getRadius() > rightWall.y && particlePosX + p.getRadius() > rightWall.x){
-        p.updateVel(-p.getVel().x*0.8,p.getVel().y, dt);
+        p.updateVel(-p.getVel().x*0.7,p.getVel().y, dt);
     };
     
 }
 
 void engine::updateDynamics(float dt, sf::RenderWindow &w, container &c){
     for (auto& particle : particles) {
+        particle.gravity(9.01f,dt);
+        handleWallCollisions(particle,c,dt);
         particle.updatePos(dt);
         particle.render(w);
-        handleWallCollisions(particle,c,dt);
     }
     handleCollisions(dt);
 }

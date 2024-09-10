@@ -9,10 +9,10 @@ int main()
 {
     bool isPaused = 0;
     engine e;
-    e.createParticles(1000, sf::Vector2f(10, 700), sf::Vector2f(0, 0),3);
+    e.createParticles(2000, sf::Vector2f(10, 700), sf::Vector2f(0, 0),3);
 
-    container c(400.0f,400.0f,5.0f,500.0f,100.0f);
-    // container c(1,0,5,795,800);
+    // container c(1.0f,400.0f,5.0f,500.0f,100.0f);
+    container c(1,0,5,795,800);
 
     sf::Clock clock;
     window.setFramerateLimit(120);

@@ -28,10 +28,15 @@ float particle::getRadius(){
     return radius;
 }
 
-void particle::updateVel(float vx, float vy, float dt){
+void particle::updateVel(double vx, double vy, double dt){
     // const float g = 100;
     vel.x = vx;
     vel.y = vy;
+}
+
+void particle::gravity(float g, float dt){
+    vel.y += g;
+    // pos.y += vel.y;
 }
 
 void particle::render(sf::RenderWindow &window){
@@ -40,8 +45,9 @@ void particle::render(sf::RenderWindow &window){
 }
 
 void particle::updatePos(float dt){
-    float g = 3.0f;
-    vel.y += g*dt;
+    // float g = 0.0f;
+    // vel.y += g*dt;
 
-    pos += sf::Vector2f(vel.x*dt, vel.y);
+    pos += sf::Vector2f(vel.x*dt, vel.y*dt);
+    // std::cout<<"nigga"<<std::endl;
 }

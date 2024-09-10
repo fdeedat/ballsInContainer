@@ -16,9 +16,10 @@ class particle{
         sf::Vector2f getPos();
         sf::Vector2f getVel();
         float getRadius();
-        void updateVel(float vx, float vy, float dt);
+        void updateVel(double vx, double vy, double dt);
         void render(sf::RenderWindow &window);
         void updatePos(float dt);
+        void gravity(float g,float dt);
 };
 
 #include "particle.cpp"
