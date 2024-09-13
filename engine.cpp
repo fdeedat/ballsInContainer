@@ -7,7 +7,12 @@ float engine::dotProduct(sf::Vector2f v1, sf::Vector2f v2) {
 
 void engine:: resolveCollision(particle& p1, particle& p2, float dt) {
     // collision to another particle
+    float x1, y1, x2, y2;
     sf::Vector2f delta = p1.getPos() - p2.getPos();
+    
+    sf::Vector2f p1Pos = p1.getPos();
+    sf::Vector2f p2Pos = p2.getPos();
+
     float dist = sqrt(delta.x * delta.x + delta.y * delta.y);
     float combinedRadius = p1.getRadius() + p2.getRadius();
     
@@ -30,9 +35,13 @@ void engine:: resolveCollision(particle& p1, particle& p2, float dt) {
 
         sf::Vector2f newVel1 = (p1.getVel() - impulseP1)*0.9f; 
         sf::Vector2f newVel2 = (p2.getVel() - impulseP2)*0.9f; 
-        
+
+        p1.setPos(p1Pos.x + combinedRadius, p1Pos.y + combinedRadius);
+        p2.setPos(p2Pos.x + combinedRadius, p2Pos.y + combinedRadius);
+
         p1.updateVel(newVel1.x,newVel1.y, dt);
         p2.updateVel(newVel2.x,newVel2.y, dt);
+
     }
 }
 
@@ -54,20 +63,20 @@ void engine::handleWallCollisions(particle &p, container &c, float dt){
     *   - select 
     * - p.vel = -curr p.vel
     */
-   sf::Vector2f bottomWall = c.getBottomWallPos();                  
-   sf::Vector2f leftWall = c.getLeftWallPos();
-   sf::Vector2f rightWall = c.getRightWallPos();
+    sf::Vector2f bottomWall = c.getBottomWallPos();                  
+    sf::Vector2f leftWall = c.getLeftWallPos();
+    sf::Vector2f rightWall = c.getRightWallPos();
 
-   float particlePosX = p.getPos().x;
-   float particlePosY = p.getPos().y;
+    float particlePosX = p.getPos().x;
+    float particlePosY = p.getPos().y;
 
     float vx,vy;
-    if(particlePosY + p.getRadius() > leftWall.y && particlePosX + p.getRadius() <= leftWall.x){
+    if(particlePosY + p.getRadius() >= leftWall.y && particlePosX + p.getRadius() <= leftWall.x){
         p.updateVel(-p.getVel().x*0.7,p.getVel().y, dt);
-    } else if(particlePosY + p.getRadius() > bottomWall.y) {
+    } else if(particlePosY + p.getRadius() >= bottomWall.y) {
         p.updateVel(p.getVel().x,-p.getVel().y*0.7, dt);
         // p.updatePos(dt,sf::Vector2f(p.getPos().x,bottomWall.y - p.getRadius()));
-    } else if(particlePosY + p.getRadius() > rightWall.y && particlePosX + p.getRadius() > rightWall.x){
+    } else if(particlePosY + p.getRadius() >= rightWall.y && particlePosX + p.getRadius() >= rightWall.x){
         p.updateVel(-p.getVel().x*0.7,p.getVel().y, dt);
     };
     

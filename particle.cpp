@@ -51,3 +51,8 @@ void particle::updatePos(float dt){
     pos += sf::Vector2f(vel.x*dt, vel.y*dt);
     // std::cout<<"nigga"<<std::endl;
 }
+
+void particle::setPos(float x, float y){
+    pos.x = x;
+    pos.y = y;
+}

@@ -20,6 +20,7 @@ class particle{
         void render(sf::RenderWindow &window);
         void updatePos(float dt);
         void gravity(float g,float dt);
+        void setPos(float x, float y);
 };
 
 #include "particle.cpp"
