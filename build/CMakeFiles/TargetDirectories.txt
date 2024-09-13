@@ -1,3 +1,0 @@
-/home/fdeedat/collision-sim/build/CMakeFiles/collision_sim.dir
-/home/fdeedat/collision-sim/build/CMakeFiles/edit_cache.dir
-/home/fdeedat/collision-sim/build/CMakeFiles/rebuild_cache.dir

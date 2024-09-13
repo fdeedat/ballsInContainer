@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/fdeedat/collision-sim/build",
-  "command": "/usr/bin/g++  -I/home/fdeedat/collision-sim -g -o CMakeFiles/collision_sim.dir/main.cpp.o -c /home/fdeedat/collision-sim/main.cpp",
-  "file": "/home/fdeedat/collision-sim/main.cpp",
-  "output": "CMakeFiles/collision_sim.dir/main.cpp.o"
-}
-]
